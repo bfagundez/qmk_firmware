@@ -26,12 +26,20 @@ enum custom_keycodes {
   VIM_PANE_RIGHT,
   VIM_PANE_UP,
   VIM_NEW_TAB,
+  VIM_V_SPLIT,
+  VIM_H_SPLIT,
+  VIM_SAVE,
   TMUX_NEXT_TAB,
   TMUX_PREV_TAB,
   TMUX_PANE_DOWN,
   TMUX_PANE_UP,
   TMUX_PANE_RIGHT,
   TMUX_PANE_LEFT,
+  TMUX_V_SPLIT,
+  TMUX_H_SPLIT,
+  TMUX_EDIT_MODE,
+  TMUX_ZOOM,
+  TMUX_NEW_TAB
 };
 
 // Fillers to make layering more clear
@@ -61,25 +69,24 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   CTL_T(KC_Z), KC_X, KC_C, KC_V, KC_B,              KC_N, KC_M, KC_COMM, KC_DOT, CTL_T(KC_SLSH), \
                KC_LGUI, KC_SPC, LOWER,              RAISE, KC_ENT, KC_LALT                 \
 ),
-
 /* Raise
  *
- * ,------------------------------------.           ,----------------------------------.
- * | Tab   |  |   |  {   |  }   |Ctl+w  |           |  `   |      |  -   |   =  | BKspc|
- * |-------+------+------+------+-------|           |------+------+------+------+------|
- * |sft/Esc|  ~   |  (   |  )   |c+gui+a|           |      |      |  Up  |      |sft/' |
- * |-------+------+------+------+-------|           |------+------+------+------+------|
- * |       |  '   |  [   |  ]   |       |           |      | Left | Down |Right |      |
- * `------------------------------------'           `----------------------------------'
- *                  ,--------------------.    ,------,-------------.
- *                  | GUI | Space |LOWER |    |RAISE |Enter | Alt  |
- *                  `-------------|      |    |      |------+------.
- *                                |      |    |      |
- *                                `------'    `------'
+ * ,------------------------------------.        ,----------------------------------.
+ * | Tab   |  |   |  {   |  }   |Ctl+w  |        |  `   |      |  -   |   =  | BKspc|
+ * |-------+------+------+------+-------|        |------+------+------+------+------|
+ * |sft/Esc|  ~   |  (   |  )   |c+gui+a|        |      |      |  Up  |      |sft/' |
+ * |-------+------+------+------+-------|        |------+------+------+------+------|
+ * |       |  '   |  [   |  ]   |       |        |      | Left | Down |Right |      |
+ * `------------------------------------'        `----------------------------------'
+ *                  ,--------------------.      ,------,-------------.
+ *                  | GUI | Space |LOWER |      |RAISE |Enter | Alt  |
+ *                  `-------------|      |      |      |------+------.
+ *                                |      |      |      |
+ *                                `------'      `------'
 */
 [_RAISE] = LAYOUT( \
   KC_TAB,  KC_BSLASH, KC_LCBR, KC_RCBR, LCTL(KC_W),           KC_GRAVE, _______, KC_MINUS, KC_EQUAL, KC_BSPC, \
-  SFT_T(KC_ESC),  KC_TILD,   KC_LPRN, KC_RPRN, LCTL(LALT(KC_LGUI)),  _______,  _______, KC_UP,    _______,  SFT_T (KC_QUOTE), \
+  SFT_T(KC_ESC),  KC_TILD,   KC_LPRN, KC_RPRN, _______,       _______,  _______, KC_UP,    _______,  SFT_T(KC_QUOTE), \
   _______, KC_QUOTE,  KC_LBRC, KC_RBRC, _______,              _______,  KC_LEFT, KC_DOWN,  KC_RGHT,  _______, \
                       _______, _______, _______,              _______,  _______, _______                    \
 ),
@@ -89,21 +96,21 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,----------------------------------.           ,----------------------------------.
  * |   1  |   2  |   3  |   4  |   5  |           |   6  |   7  |   8  |   9  |   0  |
  * |------+------+------+------+------|           |------+------+------+------+------|
- * |      |      |MouseU|      |      |           |ViPTab|      |      |ViNTab|      |
+ * |      |viNtab|viHSpl|viVspl|ViSave|           |ViPanL|ViPanD|ViPanU|ViPanR|      |
  * |------+------+------+------+------|           |------+------+------+------+------|
- * |      |MouseL|MouseD|MouseR|      |           |tmxPtb|      |      |tmxNtb|      |
+ * |txZoom|txNtab|txHspl|txVspl|txEdit|           |TxPanL|TxPanD|TxPanU|TxPanR|      |
  * `----------------------------------'           `----------------------------------'
  *                  ,--------------------.    ,------,-------------.
- *                  | GUI | Space |LOWER |    |RAISE |RmoBTN|LmoBTN|
+ *                  | GUI | Space |LOWER |    |RAISE | Enter| Alt  |
  *                  `-------------|      |    |      |------+------.
  *                                |      |    |      |
  *                                `------'    `------'
  */
 [_LOWER] = LAYOUT( \
-  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,         KC_6,          KC_7,    KC_8,    KC_9,          KC_0,    \
-  _______, _______, KC_MS_U, _______, _______,      VIM_PREV_TAB,  _______, _______, VIM_NEXT_TAB,  _______, \
-  _______, KC_MS_L, KC_MS_D, KC_MS_R, _______,      TMUX_PREV_TAB, _______, _______, TMUX_NEXT_TAB, _______, \
-                    _______, _______, _______,      _______,  KC_BTN1, KC_BTN2 \
+  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                            KC_6,          KC_7,    KC_8,    KC_9,          KC_0,    \
+  _______, VIM_NEW_TAB, VIM_H_SPLIT, VIM_V_SPLIT, VIM_SAVE,            VIM_PANE_LEFT,  VIM_PANE_DOWN,  VIM_PANE_UP,  VIM_PANE_RIGHT, _______, \
+  TMUX_ZOOM, TMUX_NEW_TAB,TMUX_H_SPLIT, TMUX_V_SPLIT, TMUX_EDIT_MODE,    TMUX_PANE_LEFT, TMUX_PANE_DOWN, TMUX_PANE_UP, TMUX_PANE_RIGHT, _______, \
+                                         _______, _______, _______,    _______,  _______, _______ \
 ),
 
 /* Adjust (Lower + Raise)
@@ -111,21 +118,21 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,----------------------------------.           ,----------------------------------.
  * |  F1  |  F2  |  F3  |  F4  |  F5  |           |   F6 |  F7  |  F8  |  F9  |  F10 |
  * |------+------+------+------+------|           |------+------+------+------+------|
- * |  F11 |  F12 |      | Mute |VolUP |           |ViPanL|ViPanD|ViPanU|ViPanR|viNtab|
- * |------+------+------+------+------|           |------+------+------+------+------|
- * | Reset|      |      |      |VolDwn|           |TxPanL|TxPanD|TxPanU|TxPanR|      |
+ * |  F11 |  F12 |MouseU| Mute |VolUP |           |ViPTab|      |      |ViNTab|      |
+ * |------+------+------+------+------|           |------+------+------+------+----- |
+ * | Reset|MouseL|MouseD|MouseR|VolDwn|           |tmxPtb|      |      |tmxNtb|      |
  * `----------------------------------'           `----------------------------------'
  *                  ,--------------------.    ,------,-------------.
- *                  | GUI | Space |LOWER |    |RAISE |Enter | Alet |
+ *                  | GUI | Space |LOWER |    |RAISE | Enter| Alt  |
  *                  `-------------|      |    |      |------+------.
  *                                |      |    |      |
  *                                `------'    `------'
  */
 [_ADJUST] =  LAYOUT( \
   KC_F1,   KC_F2,   KC_F3,   KC_F4,    KC_F5,        KC_F6,          KC_F7,          KC_F8,        KC_F9,           KC_F10, \
-  KC_F11,  KC_F12,  _______, KC__MUTE, KC__VOLUP,    VIM_PANE_LEFT,  VIM_PANE_DOWN,  VIM_PANE_UP,  VIM_PANE_RIGHT,  VIM_NEW_TAB , \
-  RESET,   _______, _______, _______,  KC__VOLDOWN,  TMUX_PANE_LEFT, TMUX_PANE_DOWN, TMUX_PANE_UP, TMUX_PANE_RIGHT, _______, \
-                    _______, _______, _______,       _______,  _______, _______                    \
+  KC_F11,  KC_F12,  KC_MS_U, KC__MUTE, KC__VOLUP,    VIM_PREV_TAB,  _______, _______, VIM_NEXT_TAB,  _______, \
+  RESET,   KC_MS_L, KC_MS_D, KC_MS_R,  KC__VOLDOWN,  TMUX_PREV_TAB, _______, _______, TMUX_NEXT_TAB, _______, \
+                    _______, _______, _______,       _______,  KC_BTN1, KC_BTN2                     \
 )
 };
 
@@ -171,6 +178,36 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       return false;
       break;
     // TMUX shortcuts
+    case TMUX_ZOOM:
+      if (record->event.pressed) {
+        SEND_STRING("`z");
+      }
+      return false;
+      break;
+    case TMUX_EDIT_MODE:
+      if (record->event.pressed) {
+        SEND_STRING("`[");
+      }
+      return false;
+      break;
+    case TMUX_NEW_TAB:
+      if (record->event.pressed) {
+        SEND_STRING("`c");
+      }
+      return false;
+      break;
+    case TMUX_V_SPLIT:
+      if (record->event.pressed) {
+        SEND_STRING("`v");
+      }
+      return false;
+      break;
+    case TMUX_H_SPLIT:
+      if (record->event.pressed) {
+        SEND_STRING("`b");
+      }
+      return false;
+      break;
     case TMUX_PREV_TAB:
       if (record->event.pressed) {
         SEND_STRING("`p");
@@ -210,7 +247,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     // VIM shortcuts
     case VIM_NEW_TAB:
       if (record->event.pressed) {
-        SEND_STRING(SS_TAP(X_ESCAPE)":tabe");
+        SEND_STRING(SS_TAP(X_ESCAPE)":tabe"SS_TAP(X_ENTER));
       }
       return false;
       break;
@@ -238,6 +275,18 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return false;
       break;
+    case VIM_H_SPLIT:
+      if (record->event.pressed) {
+        SEND_STRING(SS_TAP(X_ESCAPE)":sp"SS_TAP(X_ENTER));
+      }
+      return false;
+      break;
+    case VIM_V_SPLIT:
+      if (record->event.pressed) {
+        SEND_STRING(SS_TAP(X_ESCAPE)":vsp"SS_TAP(X_ENTER));
+      }
+      return false;
+      break;
     case VIM_PREV_TAB:
       if (record->event.pressed) {
         SEND_STRING(SS_TAP(X_ESCAPE)"gT");
@@ -247,6 +296,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case VIM_NEXT_TAB:
       if (record->event.pressed) {
         SEND_STRING(SS_TAP(X_ESCAPE)"gt");
+      }
+      return false;
+      break;
+    case VIM_SAVE:
+      if (record->event.pressed) {
+        SEND_STRING(SS_TAP(X_ESCAPE)":w"SS_TAP(X_ENTER));
       }
       return false;
       break;
