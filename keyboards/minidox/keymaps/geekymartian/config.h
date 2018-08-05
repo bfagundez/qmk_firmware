@@ -1,4 +1,5 @@
 #define PREVENT_STUCK_MODIFIERS
+#define PERMISSIVE_HOLD
 #define MOUSEKEY_DELAY             100
 #define MOUSEKEY_INTERVAL          30
 #define MOUSEKEY_MAX_SPEED         10

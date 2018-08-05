@@ -55,40 +55,40 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------|           |------+------+------+------+------|
  * |Shft/A|   S  |   D  |   F  |   G  |           |   H  |   J  |   K  |   L  |Shft/;|
  * |------+------+------+------+------|           |------+------+------+------+------|
- * |ctl/Z |   X  |   C  |   V  |   B  |           |   N  |   M  |   ,  |   .  |Ctl / |
+ * |ctl/Z |   X  |   C  |   V  |   B  |           |   N  |   M  |   ,  |alt /.|Ctl / |
  * `----------------------------------'           `----------------------------------'
  *                  ,--------------------.    ,------,-------------.
- *                  | GUI | Space |LOWER |    |RAISE |Enter | alt  |
+ *                  | GUI | Space |LOWER |    |RAISE |Enter | Tab  |
  *                  `-------------|      |    |      |------+------.
  *                                |      |    |      |
  *                                `------'    `------'
  */
 [_QWERTY] = LAYOUT( \
-  KC_Q,        KC_W, KC_E, KC_R, KC_T,              KC_Y, KC_U, KC_I,    KC_O,   KC_P,    \
-  SFT_T(KC_A), KC_S, KC_D, KC_F, KC_G,              KC_H, KC_J, KC_K,    KC_L,   SFT_T(KC_SCLN), \
-  CTL_T(KC_Z), KC_X, KC_C, KC_V, KC_B,              KC_N, KC_M, KC_COMM, KC_DOT, CTL_T(KC_SLSH), \
-               KC_LGUI, KC_SPC, LOWER,              RAISE, KC_ENT, KC_LALT                 \
+  KC_Q,        KC_W, KC_E, KC_R, KC_T,              KC_Y, KC_U, KC_I,    KC_O,          KC_P,    \
+  SFT_T(KC_A), KC_S, KC_D, KC_F, KC_G,              KC_H, KC_J, KC_K,    KC_L,          SFT_T(KC_SCLN), \
+  CTL_T(KC_Z), KC_X, KC_C, KC_V, KC_B,              KC_N, KC_M, KC_COMM, ALT_T(KC_DOT), CTL_T(KC_SLSH), \
+               KC_LGUI, KC_SPC, LOWER,              RAISE, KC_ENT, KC_TAB                \
 ),
 /* Raise
  *
  * ,------------------------------------.        ,----------------------------------.
- * | Tab   |  |   |  {   |  }   |Ctl+w  |        |  `   |      |  -   |   =  | BKspc|
+ * | Tab   |  @   |  {   |  }   |   |   |        |  `   |  !   |  -   |   =  | BKspc|
  * |-------+------+------+------+-------|        |------+------+------+------+------|
- * |sft/Esc|  ~   |  (   |  )   |c+gui+a|        |      |      |  Up  |      |sft/' |
+ * |sft/Esc|  ~   |  (   |  )   |  _    |        |  \   |      |  Up  |      |sft/' |
  * |-------+------+------+------+-------|        |------+------+------+------+------|
- * |       |  '   |  [   |  ]   |       |        |      | Left | Down |Right |      |
+ * |  *    |  '   |  [   |  ]   |  &    |        |      | Left | Down |Right |      |
  * `------------------------------------'        `----------------------------------'
  *                  ,--------------------.      ,------,-------------.
- *                  | GUI | Space |LOWER |      |RAISE |Enter | Alt  |
+ *                  | GUI | Space |LOWER |      |RAISE |Enter | Tab  |
  *                  `-------------|      |      |      |------+------.
  *                                |      |      |      |
  *                                `------'      `------'
 */
 [_RAISE] = LAYOUT( \
-  KC_TAB,  KC_BSLASH, KC_LCBR, KC_RCBR, LCTL(KC_W),           KC_GRAVE, _______, KC_MINUS, KC_EQUAL, KC_BSPC, \
-  SFT_T(KC_ESC),  KC_TILD,   KC_LPRN, KC_RPRN, _______,       _______,  _______, KC_UP,    _______,  SFT_T(KC_QUOTE), \
-  _______, KC_QUOTE,  KC_LBRC, KC_RBRC, _______,              _______,  KC_LEFT, KC_DOWN,  KC_RGHT,  _______, \
-                      _______, _______, _______,              _______,  _______, _______                    \
+  KC_TAB,        KC_AT,    KC_LCBR, KC_RCBR, KC_PIPE,       KC_GRAVE,   KC_EXCLAIM, KC_MINUS, KC_EQUAL, KC_BSPC, \
+  SFT_T(KC_ESC), KC_TILD,  KC_LPRN, KC_RPRN, KC_UNDS,       KC_BSLASH,  _______,    KC_UP,    _______,  SFT_T(KC_QUOTE), \
+  KC_ASTERISK,   KC_QUOTE, KC_LBRC, KC_RBRC, KC_AMPR,       KC_PERCENT, KC_LEFT,    KC_DOWN,  KC_RGHT,  _______, \
+                           _______, _______, _______,       _______,    _______,    _______                    \
 ),
 
 /* Lower
@@ -96,43 +96,43 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,----------------------------------.           ,----------------------------------.
  * |   1  |   2  |   3  |   4  |   5  |           |   6  |   7  |   8  |   9  |   0  |
  * |------+------+------+------+------|           |------+------+------+------+------|
- * |      |viNtab|viHSpl|viVspl|ViSave|           |ViPanL|ViPanD|ViPanU|ViPanR|      |
+ * |ViPTab|viNtab|viHSpl|viVspl|ViSave|           |ViPanL|ViPanD|ViPanU|ViPanR|ViNTab|
  * |------+------+------+------+------|           |------+------+------+------+------|
- * |txZoom|txNtab|txHspl|txVspl|txEdit|           |TxPanL|TxPanD|TxPanU|TxPanR|      |
+ * |tmxPtb|txZoom|txHspl|txVspl|txEdit|           |TxPanL|TxPanD|TxPanU|TxPanR|tmxNtb|
  * `----------------------------------'           `----------------------------------'
  *                  ,--------------------.    ,------,-------------.
- *                  | GUI | Space |LOWER |    |RAISE | Enter| Alt  |
+ *                  | GUI | Space |LOWER |    |RAISE | Enter| Tab  |
  *                  `-------------|      |    |      |------+------.
  *                                |      |    |      |
  *                                `------'    `------'
  */
 [_LOWER] = LAYOUT( \
-  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                            KC_6,          KC_7,    KC_8,    KC_9,          KC_0,    \
-  _______, VIM_NEW_TAB, VIM_H_SPLIT, VIM_V_SPLIT, VIM_SAVE,            VIM_PANE_LEFT,  VIM_PANE_DOWN,  VIM_PANE_UP,  VIM_PANE_RIGHT, _______, \
-  TMUX_ZOOM, TMUX_NEW_TAB,TMUX_H_SPLIT, TMUX_V_SPLIT, TMUX_EDIT_MODE,    TMUX_PANE_LEFT, TMUX_PANE_DOWN, TMUX_PANE_UP, TMUX_PANE_RIGHT, _______, \
-                                         _______, _______, _______,    _______,  _______, _______ \
+  KC_1,          KC_2,        KC_3,         KC_4,         KC_5,             KC_6,           KC_7,           KC_8,         KC_9,            KC_0,    \
+  VIM_PREV_TAB,  VIM_NEW_TAB, VIM_H_SPLIT,  VIM_V_SPLIT,  VIM_SAVE,         VIM_PANE_LEFT,  VIM_PANE_DOWN,  VIM_PANE_UP,  VIM_PANE_RIGHT,  VIM_NEXT_TAB, \
+  TMUX_PREV_TAB, TMUX_ZOOM,   TMUX_H_SPLIT, TMUX_V_SPLIT, TMUX_EDIT_MODE,   TMUX_PANE_LEFT, TMUX_PANE_DOWN, TMUX_PANE_UP, TMUX_PANE_RIGHT, TMUX_NEXT_TAB, \
+                              _______,      _______,      _______,          _______,        _______,        _______ \
 ),
 
 /* Adjust (Lower + Raise)
  *
  * ,----------------------------------.           ,----------------------------------.
- * |  F1  |  F2  |  F3  |  F4  |  F5  |           |   F6 |  F7  |  F8  |  F9  |  F10 |
- * |------+------+------+------+------|           |------+------+------+------+------|
- * |  F11 |  F12 |MouseU| Mute |VolUP |           |ViPTab|      |      |ViNTab|      |
- * |------+------+------+------+------|           |------+------+------+------+----- |
- * | Reset|MouseL|MouseD|MouseR|VolDwn|           |tmxPtb|      |      |tmxNtb|      |
- * `----------------------------------'           `----------------------------------'
+ * |  F1  |  F2  |  F3  |  F4  |  F5  |           |   F6 |  F7  |  F8  |  F9  |  F10  |
+ * |------+------+------+------+------|           |------+------+------+------+-------|
+ * |  F11 |  F12 |Mute  |VolDwn|VolUP |           |MouseL|MouseD|MouseU|MouseR|MouseWU|
+ * |------+------+------+------+------|           |------+------+------+------+-------|
+ * |mbtn1 |mbtn2 |Play/p|<media|media>|           |      |      |      |      |MouseWD|
+ * `----------------------------------'           `-----------------------------------'
  *                  ,--------------------.    ,------,-------------.
- *                  | GUI | Space |LOWER |    |RAISE | Enter| Alt  |
+ *                  | GUI | Space |LOWER |    |RAISE | Enter| Tab  |
  *                  `-------------|      |    |      |------+------.
  *                                |      |    |      |
  *                                `------'    `------'
  */
 [_ADJUST] =  LAYOUT( \
-  KC_F1,   KC_F2,   KC_F3,   KC_F4,    KC_F5,        KC_F6,          KC_F7,          KC_F8,        KC_F9,           KC_F10, \
-  KC_F11,  KC_F12,  KC_MS_U, KC__MUTE, KC__VOLUP,    VIM_PREV_TAB,  _______, _______, VIM_NEXT_TAB,  _______, \
-  RESET,   KC_MS_L, KC_MS_D, KC_MS_R,  KC__VOLDOWN,  TMUX_PREV_TAB, _______, _______, TMUX_NEXT_TAB, _______, \
-                    _______, _______, _______,       _______,  KC_BTN1, KC_BTN2                     \
+  KC_F1,   KC_F2,   KC_F3,    KC_F4,       KC_F5,        KC_F6,    KC_F7,   KC_F8,   KC_F9,    KC_F10,  \
+  KC_F11,  KC_F12,  KC__MUTE, KC__VOLDOWN, KC__VOLUP,    KC_MS_L,  KC_MS_D, KC_MS_U, KC_MS_R,  KC_WH_U, \
+  KC_BTN1, KC_BTN2, KC_MPLY,  KC_MRWD,     KC_MFFD,      _______,  _______, _______, _______,  KC_WH_D, \
+                    _______,  _______,     _______,      _______,  _______, _______                     \
 )
 };
 
