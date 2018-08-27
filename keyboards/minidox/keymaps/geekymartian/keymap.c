@@ -53,7 +53,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,----------------------------------.           ,----------------------------------.
  * |   Q  |   W  |   E  |   R  |   T  |           |   Y  |   U  |   I  |   O  |   P  |
  * |------+------+------+------+------|           |------+------+------+------+------|
- * |Shft/A|   S  |   D  |   F  |   G  |           |   H  |   J  |   K  |   L  |Shft/;|
+ * |   A  |   S  |   D  |   F  |   G  |           |   H  |   J  |   K  |   L  |Shft/;|
  * |------+------+------+------+------|           |------+------+------+------+------|
  * |ctl/Z |   X  |   C  |   V  |   B  |           |   N  |   M  |   ,  |alt /.|Ctl / |
  * `----------------------------------'           `----------------------------------'
@@ -76,7 +76,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |-------+------+------+------+-------|        |------+------+------+------+------|
  * |sft/Esc|  ~   |  (   |  )   |  _    |        | Left | Down |  Up  | Right| sft/'|
  * |-------+------+------+------+-------|        |------+------+------+------+------|
- * |  *    |  '   |  [   |  ]   |  &    |        |  %   |   \  |  $   |  +   |  :   |
+ * |  *    |  #   |  [   |  ]   |  &    |        |  %   |   \  |  $   |  +   |  :   |
  * `------------------------------------'        `----------------------------------'
  *                  ,--------------------.      ,------,-------------.
  *                  | GUI | Space |LOWER |      |RAISE |Enter | Tab  |
@@ -87,7 +87,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_RAISE] = LAYOUT( \
   KC_TAB,        KC_AT,    KC_LCBR, KC_RCBR, KC_PIPE,       KC_GRAVE,   KC_EXCLAIM, KC_MINUS,  KC_EQUAL,  KC_BSPC, \
   SFT_T(KC_ESC), KC_TILD,  KC_LPRN, KC_RPRN, KC_UNDS,       KC_LEFT,    KC_DOWN,    KC_UP,     KC_RGHT,   SFT_T(KC_QUOTE), \
-  KC_ASTERISK,   KC_QUOTE, KC_LBRC, KC_RBRC, KC_AMPR,       KC_PERCENT, KC_BSLASH,  KC_DOLLAR, KC_PLUS ,  KC_COLON, \
+  KC_ASTERISK,   KC_HASH, KC_LBRC, KC_RBRC, KC_AMPR,       KC_PERCENT, KC_BSLASH,  KC_DOLLAR, KC_PLUS ,  KC_COLON, \
                            _______, _______, _______,       _______,    _______,    _______                    \
 ),
 
