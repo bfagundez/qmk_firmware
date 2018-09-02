@@ -12,6 +12,7 @@ extern keymap_config_t keymap_config;
 #define _DVORAK 1
 #define _LOWER 2
 #define _RAISE 3
+#define _NUMPAD 4
 #define _ADJUST 16
 
 
@@ -19,8 +20,10 @@ enum custom_keycodes {
   QWERTY = SAFE_RANGE,
   DVORAK,
   LOWER,
+  NUMPAD,
   RAISE,
   ADJUST,
+  VIM_PASTE_LAST_REGISTER,
   VIM_NEXT_TAB,
   VIM_PREV_TAB,
   VIM_PANE_DOWN,
@@ -125,9 +128,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------|           |------+------+------+------+------|
  * |tmxPtb|txZoom|txHspl|txVspl|txEdit|           |TxPanL|TxPanD|TxPanU|TxPanR|tmxNtb|
  * `----------------------------------'           `----------------------------------'
- *                  ,--------------------.    ,------,-------------.
- *                  | GUI | Space |LOWER |    |RAISE | Enter| Tab  |
- *                  `-------------|      |    |      |------+------.
+ *                  ,--------------------.    ,------,--------------.
+ *                  | GUI | Space |LOWER |    |RAISE | Enter|ViPaste|
+ *                  `-------------|      |    |      |------+-------.
  *                                |      |    |      |
  *                                `------'    `------'
  */
@@ -135,7 +138,29 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC_1,          KC_2,        KC_3,         KC_4,         KC_5,             KC_6,           KC_7,           KC_8,         KC_9,            KC_0,    \
   VIM_PREV_TAB,  VIM_NEW_TAB, VIM_H_SPLIT,  VIM_V_SPLIT,  VIM_SAVE,         VIM_PANE_LEFT,  VIM_PANE_DOWN,  VIM_PANE_UP,  VIM_PANE_RIGHT,  VIM_NEXT_TAB, \
   TMUX_PREV_TAB, TMUX_ZOOM,   TMUX_H_SPLIT, TMUX_V_SPLIT, TMUX_EDIT_MODE,   TMUX_PANE_LEFT, TMUX_PANE_DOWN, TMUX_PANE_UP, TMUX_PANE_RIGHT, TMUX_NEXT_TAB, \
-                              _______,      _______,      _______,          _______,        _______,        _______ \
+                              _______,      _______,      _______,          _______,        _______,        VIM_PASTE_LAST_REGISTER \
+),
+
+/* Numpad
+ *
+ * ,----------------------------------.           ,----------------------------------.
+ * |      |      |      |      |      |           | Nmpd1| Nmpd2| Nmpd3|      |      |
+ * |------+------+------+------+------|           |------+------+------+------+------|
+ * |      |      |      |      |      |           | Nmpd4| Nmpd5| Nmpd6|      |      |
+ * |------+------+------+------+------|           |------+------+------+------+------|
+ * |      |      |      |      |      |           | Nmpd7| Nmpd8| Nmpd9| Nmpd0|      |
+ * `----------------------------------'           `----------------------------------'
+ *                  ,--------------------.    ,------,-------------.
+ *                  | GUI | Space |LOWER |    |RAISE |Enter | Tab  |
+ *                  `-------------|      |    |      |------+------.
+ *                                |      |    |      |
+ *                                `------'    `------'
+ */
+[_NUMPAD] = LAYOUT ( \
+  _______, _______, _______, _______, _______,           KC_P1, KC_P2, KC_P3, _______, _______, \
+  _______, _______, _______, _______, _______,           KC_P4, KC_P5, KC_P6, _______, _______, \
+  _______, _______, _______, _______, _______,           KC_P7, KC_P8, KC_P9, KC_P0,   _______, \
+                    KC_LGUI, KC_SPC, LOWER,          RAISE, KC_ENT, KC_TAB                \
 ),
 
 /* Adjust (Lower + Raise)
@@ -145,7 +170,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------|           |------+------+------+------+-------|
  * |  F11 |  F12 |Mute  |VolDwn|VolUP |           |MouseL|MouseD|MouseU|MouseR|MouseWU|
  * |------+------+------+------+------|           |------+------+------+------+-------|
- * |mbtn1 |mbtn2 |Play/p|<media|media>|           |RGBTog|RGB_Md|RGB_B+|RGB_B-|MouseWD|
+ * |mbtn1 |mbtn2 |numpad|qwerty|dvorak|           |RGBTog|RGB_Md|RGB_B+|RGB_B-|MouseWD|
  * `----------------------------------'           `-----------------------------------'
  *                  ,--------------------.    ,------,-------------.
  *                  | GUI | Space |LOWER |    |RAISE | Enter| Tab  |
@@ -156,7 +181,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_ADJUST] =  LAYOUT( \
   KC_F1,   KC_F2,   KC_F3,    KC_F4,       KC_F5,        KC_F6,    KC_F7,   KC_F8,   KC_F9,    KC_F10,  \
   KC_F11,  KC_F12,  KC__MUTE, KC__VOLDOWN, KC__VOLUP,    KC_MS_L,  KC_MS_D, KC_MS_U, KC_MS_R,  KC_WH_U, \
-  KC_BTN1, KC_BTN2, _______,  QWERTY,      DVORAK,       RGB_TOG,  RGB_MOD, RGB_VAI, RGB_VAD,  KC_WH_D, \
+  KC_BTN1, KC_BTN2, TT(_NUMPAD),   QWERTY,      DVORAK,       RGB_TOG,  RGB_MOD, RGB_VAI, RGB_VAD,  KC_WH_D, \
                     _______,  _______,     _______,      _______,  _______, _______                     \
 )
 };
@@ -277,6 +302,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       return false;
       break;
     // VIM shortcuts
+    case VIM_PASTE_LAST_REGISTER:
+      if (record->event.pressed) {
+        SEND_STRING(SS_TAP(X_ESCAPE)"\"0p");
+      }
+      return false;
+      break;
     case VIM_NEW_TAB:
       if (record->event.pressed) {
         SEND_STRING(SS_TAP(X_ESCAPE)":tabe"SS_TAP(X_ENTER));
