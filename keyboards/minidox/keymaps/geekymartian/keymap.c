@@ -12,7 +12,7 @@ extern keymap_config_t keymap_config;
 #define _DVORAK 1
 #define _LOWER 2
 #define _RAISE 3
-#define _NUMPAD 4
+#define _FANCY 4
 #define _ADJUST 16
 
 
@@ -20,7 +20,7 @@ enum custom_keycodes {
   QWERTY = SAFE_RANGE,
   DVORAK,
   LOWER,
-  NUMPAD,
+  FANCY,
   RAISE,
   ADJUST,
   VIM_PASTE_LAST_REGISTER,
@@ -141,7 +141,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                               _______,      _______,      _______,          _______,        _______,        VIM_PASTE_LAST_REGISTER \
 ),
 
-/* Numpad
+/* RGB-Numpad
  *
  * ,----------------------------------.           ,----------------------------------.
  * |      |      |      |      |      |           | Nmpd1| Nmpd2| Nmpd3|      |      |
@@ -156,10 +156,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                                |      |    |      |
  *                                `------'    `------'
  */
-[_NUMPAD] = LAYOUT ( \
-  _______, _______, _______, _______, _______,           KC_P1, KC_P2, KC_P3, _______, _______, \
-  _______, _______, _______, _______, _______,           KC_P4, KC_P5, KC_P6, _______, _______, \
-  _______, _______, _______, _______, _______,           KC_P7, KC_P8, KC_P9, KC_P0,   _______, \
+[_FANCY] = LAYOUT ( \
+  RGB_HUI, RGB_VAI, RGB_SAI, _______, RGB_MOD,           KC_P1, KC_P2, KC_P3, _______, _______, \
+  RGB_HUD, RGB_VAD, RGB_SAD, _______, RGB_RMOD,           KC_P4, KC_P5, KC_P6, _______, _______, \
+  _______, _______, _______, _______, RGB_TOG,           KC_P7, KC_P8, KC_P9, KC_P0,   _______, \
                     KC_LGUI, KC_SPC, LOWER,          RAISE, KC_ENT, KC_TAB                \
 ),
 
@@ -181,7 +181,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_ADJUST] =  LAYOUT( \
   KC_F1,   KC_F2,   KC_F3,    KC_F4,       KC_F5,        KC_F6,    KC_F7,   KC_F8,   KC_F9,    KC_F10,  \
   KC_F11,  KC_F12,  KC__MUTE, KC__VOLDOWN, KC__VOLUP,    KC_MS_L,  KC_MS_D, KC_MS_U, KC_MS_R,  KC_WH_U, \
-  KC_BTN1, KC_BTN2, TT(_NUMPAD),   QWERTY,      DVORAK,       RGB_TOG,  RGB_MOD, RGB_VAI, RGB_VAD,  KC_WH_D, \
+  KC_BTN1, KC_BTN2, TG(_FANCY),   QWERTY,      DVORAK,       RGB_TOG,  RGB_MOD, RGB_VAI, RGB_VAD,  KC_WH_D, \
                     _______,  _______,     _______,      _______,  _______, _______                     \
 )
 };
