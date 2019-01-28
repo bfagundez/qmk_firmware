@@ -37,12 +37,15 @@ enum custom_keycodes {
   TMUX_H_SPLIT,
   TMUX_EDIT_MODE,
   TMUX_ZOOM,
-  TMUX_NEW_TAB
+  TMUX_NEW_TAB,
+  SPCT_MAXIMIZE,
+  SPCT_LEFT_HALF,
+  SPCT_RIGHT_HALF,
+  SCREENSHOT
 };
 
 // Fillers to make layering more clear
 #define _______ KC_TRNS
-#define XXXXXXX KC_NO
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /* Qwerty
@@ -67,11 +70,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,-----------------------------------------.               ,-----------------------------------------.
  * |   `  |   1  |   2  |   3  |   4  |   5  |               |   6  |   7  |   8  |   9  |   0  | Del  |
  * |------+------+------+------+------+------|               |------+------+------+------+------+------|
- * |ViPTab|      |viNtab|viHSpl|viVspl|ViSave|               |ViPanL|ViPanD|ViPanU|ViPanR|      |ViNTab|
+ * |ViPTab|      |viNwtb|viHSpl|viVspl|ViSave|               |ViPanL|ViPanD|ViPanU|ViPanR|      |ViNTab|
  * |------+------+------+------+------+------|               |------+------+------+------+------+------|
- * |tmxPtb|      |txZoom|txHspl|txVspl|txEdit|               |TxPanL|TxPanD|TxPanU|TxPanR|      |tmxNtb|
+ * |tmxPtb|txZoom|      |txHspl|txVspl|txEdit|               |TxPanL|TxPanD|TxPanU|TxPanR|      |tmxNtb|
  * |------+------+------+------+------+------|               |------+------+------+------+------+------|
- * |ViPast|      |      |      |      |      |               |      |      |      |      |      |      |
+ * |ViPast|      |      |      |      |      |               |      |winLef|winMax|winRgt|      |      |
  * `-----------------------------------------'               `-----------------------------------------'
  */
 
@@ -79,7 +82,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC_GRV, KC_1, KC_2,    KC_3,    KC_4,                                           KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_DEL, \
   VIM_PREV_TAB, _______, VIM_NEW_TAB, VIM_H_SPLIT,  VIM_V_SPLIT,  VIM_SAVE,       VIM_PANE_LEFT,  VIM_PANE_DOWN,  VIM_PANE_UP,  VIM_PANE_RIGHT, _______, VIM_NEXT_TAB,  \
   TMUX_PREV_TAB, TMUX_ZOOM, _______, TMUX_H_SPLIT, TMUX_V_SPLIT, TMUX_EDIT_MODE,  TMUX_PANE_LEFT, TMUX_PANE_DOWN, TMUX_PANE_UP, TMUX_PANE_RIGHT, _______, TMUX_NEXT_TAB,\
-  VIM_PASTE_LAST_REGISTER, _______, _______, _______, _______, _______, _______, _______,_______, _______, _______, _______ \
+  VIM_PASTE_LAST_REGISTER, _______, _______, _______, _______, _______,           _______, SPCT_LEFT_HALF,SPCT_MAXIMIZE, SPCT_RIGHT_HALF, _______, SCREENSHOT \
 ),
 
 /* Raise
@@ -94,9 +97,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `-----------------------------------------'               `-----------------------------------------'
  */
 [_RAISE] = LAYOUT_ortho_4x12( \
-  _______, _______, KC_AT,    KC_LCBR, KC_RCBR, KC_PIPE,      KC_GRAVE,   KC_EXCLAIM, KC_MINUS,  KC_EQUAL, _______, _______, \
-  _______, _______, KC_TILD,  KC_LPRN, KC_RPRN, KC_UNDS,      KC_LEFT,KC_DOWN,  KC_UP,   KC_RIGHT, _______, KC_QUOTE,\
-  _______, _______, KC_HASH, KC_LBRC, KC_RBRC,  KC_AMPR,      KC_PERCENT, KC_BSLASH,  KC_DOLLAR, KC_PLUS ,  KC_COLON, _______,\
+  _______,  _______, KC_AT,    KC_LCBR, KC_RCBR, KC_PIPE,      KC_GRAVE,   KC_EXCLAIM, KC_MINUS,  KC_EQUAL, _______, _______, \
+  SPCT_LEFT_HALF, _______, KC_TILD,  KC_LPRN, KC_RPRN, KC_UNDS,      KC_LEFT,KC_DOWN,  KC_UP,   KC_RIGHT, _______, KC_QUOTE,\
+  _______, KC_ASTERISK, KC_HASH, KC_LBRC, KC_RBRC,  KC_AMPR,      KC_PERCENT, KC_BSLASH,  KC_DOLLAR, KC_PLUS ,  KC_COLON, _______,\
   _______, _______, _______, _______, _______, _______,       _______, _______, _______, _______, _______, _______\
 ),
 
@@ -131,9 +134,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
     case QWERTY:
       if (record->event.pressed) {
-        #ifdef AUDIO_ENABLE
-          PLAY_SONG(tone_qwerty);
-        #endif
         persistent_default_layer_set(1UL<<_QWERTY);
       }
       return false;
@@ -187,13 +187,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       break;
     case TMUX_V_SPLIT:
       if (record->event.pressed) {
-        SEND_STRING("`v");
+        SEND_STRING("`b");
       }
       return false;
       break;
     case TMUX_H_SPLIT:
       if (record->event.pressed) {
-        SEND_STRING("`b");
+        SEND_STRING("`v");
       }
       return false;
       break;
@@ -297,6 +297,30 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case VIM_SAVE:
       if (record->event.pressed) {
         SEND_STRING(SS_TAP(X_ESCAPE)":w"SS_TAP(X_ENTER));
+      }
+      return false;
+      break;
+    case SPCT_MAXIMIZE:
+      if (record->event.pressed) {
+        SEND_STRING(SS_LCTRL(SS_LGUI("m")));
+      }
+      return false;
+      break;
+    case SPCT_LEFT_HALF:
+      if (record->event.pressed) {
+        SEND_STRING(SS_LCTRL(SS_LGUI("h")));
+      }
+      return false;
+      break;
+    case SPCT_RIGHT_HALF:
+      if (record->event.pressed) {
+        SEND_STRING(SS_LCTRL(SS_LGUI("l")));
+      }
+      return false;
+      break;
+    case SCREENSHOT:
+      if (record->event.pressed) {
+        SEND_STRING(SS_LCTRL(SS_LGUI("s")));
       }
       return false;
       break;
