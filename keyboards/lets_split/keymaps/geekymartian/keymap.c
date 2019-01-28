@@ -38,7 +38,6 @@ enum custom_keycodes {
   TMUX_EDIT_MODE,
   TMUX_ZOOM,
   TMUX_NEW_TAB
-
 };
 
 // Fillers to make layering more clear
@@ -72,7 +71,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------|               |------+------+------+------+------+------|
  * |tmxPtb|      |txZoom|txHspl|txVspl|txEdit|               |TxPanL|TxPanD|TxPanU|TxPanR|      |tmxNtb|
  * |------+------+------+------+------+------|               |------+------+------+------+------+------|
- * |ViPast|      |      |      |      |      |               |      |      | Next | Vol- | Vol+ | Play |
+ * |ViPast|      |      |      |      |      |               |      |      |      |      |      |      |
  * `-----------------------------------------'               `-----------------------------------------'
  */
 
@@ -80,7 +79,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC_GRV, KC_1, KC_2,    KC_3,    KC_4,                                           KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_DEL, \
   VIM_PREV_TAB, _______, VIM_NEW_TAB, VIM_H_SPLIT,  VIM_V_SPLIT,  VIM_SAVE,       VIM_PANE_LEFT,  VIM_PANE_DOWN,  VIM_PANE_UP,  VIM_PANE_RIGHT, _______, VIM_NEXT_TAB,  \
   TMUX_PREV_TAB, TMUX_ZOOM, _______, TMUX_H_SPLIT, TMUX_V_SPLIT, TMUX_EDIT_MODE,  TMUX_PANE_LEFT, TMUX_PANE_DOWN, TMUX_PANE_UP, TMUX_PANE_RIGHT, _______, TMUX_NEXT_TAB,\
-  VIM_PASTE_LAST_REGISTER, _______, _______, _______, _______, _______, _______, _______, KC_MNXT, KC_VOLD, KC_VOLU, KC_MPLY \
+  VIM_PASTE_LAST_REGISTER, _______, _______, _______, _______, _______, _______, _______,_______, _______, _______, _______ \
 ),
 
 /* Raise
