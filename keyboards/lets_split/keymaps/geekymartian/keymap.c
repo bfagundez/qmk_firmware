@@ -91,14 +91,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------|               |------+------+------+------+------+------|
  * |      |      |  ~   |  (   |  )   |  _   |               | Left | Down |  Up  | Right|      |      |
  * |------+------+------+------+------+------|               |------+------+------+------+------+------|
- * |      |      |  #   |  [   |  ]   |  &   |               |  %   |   \  |  $   |  +   |  :   |      |
+ * |      |  *   |  #   |  [   |  ]   |  &   |               |  %   |   \  |  $   |  +   |  :   |      |
  * |------+------+------+------+------+------|               |------+------+------+------+------+------|
  * |      |      |      |      |      |      |               |      |      |      |      |      |      |
  * `-----------------------------------------'               `-----------------------------------------'
  */
 [_RAISE] = LAYOUT_ortho_4x12( \
   _______,  _______, KC_AT,    KC_LCBR, KC_RCBR, KC_PIPE,      KC_GRAVE,   KC_EXCLAIM, KC_MINUS,  KC_EQUAL, _______, _______, \
-  SPCT_LEFT_HALF, _______, KC_TILD,  KC_LPRN, KC_RPRN, KC_UNDS,      KC_LEFT,KC_DOWN,  KC_UP,   KC_RIGHT, _______, KC_QUOTE,\
+  _______, _______, KC_TILD,  KC_LPRN, KC_RPRN, KC_UNDS,      KC_LEFT,KC_DOWN,  KC_UP,   KC_RIGHT, _______, KC_QUOTE,\
   _______, KC_ASTERISK, KC_HASH, KC_LBRC, KC_RBRC,  KC_AMPR,      KC_PERCENT, KC_BSLASH,  KC_DOLLAR, KC_PLUS ,  KC_COLON, _______,\
   _______, _______, _______, _______, _______, _______,       _______, _______, _______, _______, _______, _______\
 ),
