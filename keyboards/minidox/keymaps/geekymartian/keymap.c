@@ -120,7 +120,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 ),
 
 /* Lower
- *
+ * idea: remove numbers from here
+ * Toadd: bnext/bprev (buffer nav)
+ *    :let @+ = expand("%") (to copy current file path to the clipboard)
  * ,----------------------------------.           ,----------------------------------.
  * |   1  |   2  |   3  |   4  |   5  |           |   6  |   7  |   8  |   9  |   0  |
  * |------+------+------+------+------|           |------+------+------+------+------|
