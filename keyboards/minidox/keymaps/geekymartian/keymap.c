@@ -15,7 +15,6 @@ extern keymap_config_t keymap_config;
 #define _FANCY 5
 #define _ADJUST 16
 
-
 enum custom_keycodes {
   QWERTY = SAFE_RANGE,
   LOWER,
@@ -24,6 +23,7 @@ enum custom_keycodes {
   EXTRA,
   ADJUST,
   VIM_PASTE_LAST_REGISTER,
+  VIM_EQUALIZE_PANES,
   VIM_NEXT_TAB,
   VIM_PREV_TAB,
   VIM_PANE_DOWN,
@@ -84,7 +84,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /* Lower (Macro full)
  *
  * ,----------------------------------.           ,----------------------------------.
- * |winLef|      |winMax|      |winRgt|           |ViOpnf|ViPast|ViCPth|      |ViTgCm|
+ * |winLef|      |winMax|      |winRgt|           |ViOpnf|ViPast|ViCPth|ViEqPn|ViTgCm|
  * |------+------+------+------+------|           |------+------+------+------+------|
  * |ViPTab|viNtab|viHSpl|viVspl|ViSave|           |ViPanL|ViPanD|ViPanU|ViPanR|ViNTab|
  * |------+------+------+------+------|           |------+------+------+------+------|
@@ -97,7 +97,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                                `------'    `------'
  */
 [_LOWER] = LAYOUT( \
-  SPCT_LEFT_HALF, _______, SPCT_MAXIMIZE, _______,  SPCT_RIGHT_HALF,        VIM_OPEN_FOLDS,  VIM_PASTE_LAST_REGISTER , VIM_COPY_FILE_PATH, _______, VIM_TOGGLE_COMMENT,    \
+  SPCT_LEFT_HALF, _______, SPCT_MAXIMIZE, _______,  SPCT_RIGHT_HALF,        VIM_OPEN_FOLDS,  VIM_PASTE_LAST_REGISTER , VIM_COPY_FILE_PATH, VIM_EQUALIZE_PANES, VIM_TOGGLE_COMMENT,    \
   VIM_PREV_TAB,  VIM_NEW_TAB, VIM_H_SPLIT,  VIM_V_SPLIT,  VIM_SAVE,         VIM_PANE_LEFT,  VIM_PANE_DOWN,  VIM_PANE_UP,  VIM_PANE_RIGHT,  VIM_NEXT_TAB, \
   TMUX_PREV_TAB, TMUX_ZOOM,   TMUX_H_SPLIT, TMUX_V_SPLIT, TMUX_EDIT_MODE,   TMUX_PANE_LEFT, TMUX_PANE_DOWN, TMUX_PANE_UP, TMUX_PANE_RIGHT, TMUX_NEXT_TAB, \
                                               _______, _______, _______,    _______,    _______,  _______ \
@@ -118,10 +118,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                                `------'      `------'
 */
 [_RAISE] = LAYOUT( \
-  KC_TAB,        KC_AT,    KC_LCBR, KC_RCBR, KC_PIPE,       KC_GRAVE,   KC_EXCLAIM, KC_MINUS,  KC_EQUAL,  KC_BSPC, \
-  SFT_T(KC_ESC), KC_TILD,  KC_LPRN, KC_RPRN, KC_UNDS,       KC_LEFT,    KC_DOWN,    KC_UP,     KC_RGHT,   SFT_T(KC_QUOTE), \
+  KC_TAB,        KC_AT,    KC_LCBR, KC_RCBR, KC_PIPE,      KC_GRAVE,   KC_EXCLAIM, KC_MINUS,  KC_EQUAL,  KC_BSPC, \
+  SFT_T(KC_ESC), KC_TILD,  KC_LPRN, KC_RPRN, KC_UNDS,      KC_LEFT,    KC_DOWN,    KC_UP,     KC_RGHT,   SFT_T(KC_QUOTE), \
   KC_ASTERISK,   KC_HASH, KC_LBRC, KC_RBRC, KC_AMPR,       KC_PERCENT, KC_BSLASH,  KC_DOLLAR, KC_PLUS ,  KC_COLON, \
-                           _______, _______, _______,       _______,    _______,    _______                    \
+                           _______, _______, _______,      _______,    _______,    _______                    \
 ),
 /* Extra
  *
@@ -175,7 +175,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |mbtn1 |mbtn2 |fancy |qwerty|      |           |mPrev |mNext |mPlay |scrsht|MouseWD|
  * `----------------------------------'           `-----------------------------------'
  *                  ,--------------------.    ,------,-------------.
- *                  | GUI | Space |LOWER |    |RAISE | Enter| Tab  |
+ *                  |RESET| Space |LOWER |    |RAISE | Enter| Tab  |
  *                  `-------------|      |    |      |------+------.
  *                                |      |    |      |
  *                                `------'    `------'
@@ -184,7 +184,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC_F1,   KC_F2,   KC_F3,    KC_F4,           KC_F5,    KC_F6,    KC_F7,   KC_F8,   KC_F9,    KC_F10,  \
   KC_F11,  KC_F12,  KC__MUTE, KC__VOLDOWN, KC__VOLUP,    KC_MS_L,  KC_MS_D, KC_MS_U, KC_MS_R,  KC_WH_U, \
   KC_BTN1, KC_BTN2, TG(_FANCY), QWERTY, _______,         KC_MPRV, KC_MNXT, KC_MPLY, SCREENSHOT ,  KC_WH_D, \
-                        _______, _______, _______,       _______,  _______, _______                     \
+                        RESET, _______, _______,       _______,  _______, _______                     \
 )
 };
 
@@ -369,6 +369,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case VIM_SAVE:
       if (record->event.pressed) {
         SEND_STRING(SS_TAP(X_ESCAPE)":w"SS_TAP(X_ENTER));
+      }
+      return false;
+      break;
+    case VIM_EQUALIZE_PANES:
+      if (record->event.pressed) {
+        SEND_STRING(SS_LCTRL("w")SS_TAP(X_EQUAL));
       }
       return false;
       break;
