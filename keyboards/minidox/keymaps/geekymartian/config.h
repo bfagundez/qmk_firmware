@@ -6,5 +6,7 @@
 #define RGBLIGHT_ANIMATIONS
 #undef RGBLED_NUM
 #define RGB_DI_PIN D7
-#define RGBLED_NUM 8
-
+#define RGBLED_NUM 6
+#define NO_ACTION_ONESHOT
+#define NO_ACTION_MACRO
+#define NO_ACTION_FUNCTION
