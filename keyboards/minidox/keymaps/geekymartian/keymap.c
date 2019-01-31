@@ -36,6 +36,7 @@ enum custom_keycodes {
   VIM_OPEN_FOLDS,
   VIM_COPY_FILE_PATH,
   VIM_SAVE,
+  VIM_TOGGLE_COMMENT,
   TMUX_NEXT_TAB,
   TMUX_PREV_TAB,
   TMUX_PANE_DOWN,
@@ -80,15 +81,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   CTL_T(KC_Z), KC_X, KC_C, KC_V, KC_B,              KC_N, KC_M, KC_COMM, ALT_T(KC_DOT), CTL_T(KC_SLSH), \
                KC_LGUI, KC_SPC, LOWER,              RAISE, KC_ENT, EXTRA                \
 ),
-
-/* Extra
+/* Lower (Macro full)
  *
  * ,----------------------------------.           ,----------------------------------.
- * |   1  |   2  |   3  |   4  |   5  |           |   6  |   7  |   8  |   9  |   0  |
+ * |winLef|      |winMax|      |winRgt|           |ViOpnf|ViPast|ViCPth|      |ViTgCm|
  * |------+------+------+------+------|           |------+------+------+------+------|
- * |      |      |      |      |      |           |      |      |      |      |      |
+ * |ViPTab|viNtab|viHSpl|viVspl|ViSave|           |ViPanL|ViPanD|ViPanU|ViPanR|ViNTab|
  * |------+------+------+------+------|           |------+------+------+------+------|
- * |      |      |      |      |      |           |      |      |      |      |      |
+ * |tmxPtb|txZoom|txHspl|txVspl|txEdit|           |TxPanL|TxPanD|TxPanU|TxPanR|tmxNtb|
  * `----------------------------------'           `----------------------------------'
  *                  ,--------------------.    ,------,-------------.
  *                  | GUI | Space |LOWER |    |RAISE |Enter |EXTRA |
@@ -96,13 +96,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                                |      |    |      |
  *                                `------'    `------'
  */
-[_EXTRA] = LAYOUT( \
-  KC_1,          KC_2,        KC_3,         KC_4,         KC_5,             KC_6,           KC_7,           KC_8,         KC_9,            KC_0,    \
-  SFT_T(KC_A), KC_S, KC_D, KC_F, KC_G,              KC_H, KC_J, KC_K,    KC_L,          SFT_T(KC_SCLN), \
-  CTL_T(KC_Z), KC_X, KC_C, KC_V, KC_B,              KC_N, KC_M, KC_COMM, ALT_T(KC_DOT), CTL_T(KC_SLSH), \
-               KC_LGUI, KC_SPC, LOWER,              RAISE, KC_ENT, EXTRA                \
+[_LOWER] = LAYOUT( \
+  SPCT_LEFT_HALF, _______, SPCT_MAXIMIZE, _______,  SPCT_RIGHT_HALF,        VIM_OPEN_FOLDS,  VIM_PASTE_LAST_REGISTER , VIM_COPY_FILE_PATH, _______, VIM_TOGGLE_COMMENT,    \
+  VIM_PREV_TAB,  VIM_NEW_TAB, VIM_H_SPLIT,  VIM_V_SPLIT,  VIM_SAVE,         VIM_PANE_LEFT,  VIM_PANE_DOWN,  VIM_PANE_UP,  VIM_PANE_RIGHT,  VIM_NEXT_TAB, \
+  TMUX_PREV_TAB, TMUX_ZOOM,   TMUX_H_SPLIT, TMUX_V_SPLIT, TMUX_EDIT_MODE,   TMUX_PANE_LEFT, TMUX_PANE_DOWN, TMUX_PANE_UP, TMUX_PANE_RIGHT, TMUX_NEXT_TAB, \
+                                              _______, _______, _______,    _______,    _______,  _______ \
 ),
-
 /* Raise
  *
  * ,------------------------------------.        ,----------------------------------.
@@ -124,33 +123,28 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC_ASTERISK,   KC_HASH, KC_LBRC, KC_RBRC, KC_AMPR,       KC_PERCENT, KC_BSLASH,  KC_DOLLAR, KC_PLUS ,  KC_COLON, \
                            _______, _______, _______,       _______,    _______,    _______                    \
 ),
-
-
-/* Lower
- * idea: remove numbers from here
- * Toadd: bnext/bprev (buffer nav)
- *    :let @+ = expand("%") (to copy current file path to the clipboard)
+/* Extra
+ *
  * ,----------------------------------.           ,----------------------------------.
  * |   1  |   2  |   3  |   4  |   5  |           |   6  |   7  |   8  |   9  |   0  |
  * |------+------+------+------+------|           |------+------+------+------+------|
- * |ViPTab|viNtab|viHSpl|viVspl|ViSave|           |ViPanL|ViPanD|ViPanU|ViPanR|ViNTab|
+ * |      |      |      |      |      |           |      |      |      |      |      |
  * |------+------+------+------+------|           |------+------+------+------+------|
- * |tmxPtb|txZoom|txHspl|txVspl|txEdit|           |TxPanL|TxPanD|TxPanU|TxPanR|tmxNtb|
+ * |      |      |      |      |      |           |      |      |      |      |      |
  * `----------------------------------'           `----------------------------------'
- *                  ,--------------------.    ,------,--------------.
- *                  | GUI |ViCpPth|LOWER |    |RAISE |ViOpnf|ViPaste|
- *                  `-------------|      |    |      |------+-------.
+ *                  ,--------------------.    ,------,-------------.
+ *                  | GUI | Space |LOWER |    |RAISE |Enter |EXTRA |
+ *                  `-------------|      |    |      |------+------.
  *                                |      |    |      |
  *                                `------'    `------'
  */
-[_LOWER] = LAYOUT( \
-  SPCT_LEFT_HALF, _______, _______, _______,  SPCT_MAXIMIZE,                _______, _______,  _______, _______, SPCT_RIGHT_HALF,    \
-  VIM_PREV_TAB,  VIM_NEW_TAB, VIM_H_SPLIT,  VIM_V_SPLIT,  VIM_SAVE,         VIM_PANE_LEFT,  VIM_PANE_DOWN,  VIM_PANE_UP,  VIM_PANE_RIGHT,  VIM_NEXT_TAB, \
-  TMUX_PREV_TAB, TMUX_ZOOM,   TMUX_H_SPLIT, TMUX_V_SPLIT, TMUX_EDIT_MODE,   TMUX_PANE_LEFT, TMUX_PANE_DOWN, TMUX_PANE_UP, TMUX_PANE_RIGHT, TMUX_NEXT_TAB, \
-                              _______,      VIM_COPY_FILE_PATH,      _______,          _______,        VIM_OPEN_FOLDS,        VIM_PASTE_LAST_REGISTER \
+[_EXTRA] = LAYOUT( \
+  KC_1, KC_2, KC_3, KC_4,       KC_5,               KC_6, KC_7, KC_8, KC_9, KC_0,\
+  _______, _______, _______, _______,_______,       _______, _______, _______, _______, _______, \
+  _______, _______, _______, _______,_______,       _______, _______, _______, _______, _______, \
+            _______, _______, _______,              _______, _______, _______\
 ),
-
-/* RGB-Numpad
+/* Fancy (RGB-Numpad)
  *
  * ,-----------------------------------.           ,----------------------------------.
  * |rgbhui|rgbvai|rgbsai|      |rgbmod>|           | Nmpd1| Nmpd2| Nmpd3|      |      |
@@ -171,7 +165,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   _______, _______, _______, _______, RGB_TOG,           KC_P7, KC_P8, KC_P9, KC_P0,   _______, \
                     KC_LGUI, KC_SPC, LOWER,          RAISE, KC_ENT, _______                \
 ),
-
 /* Adjust (Lower + Raise)
  *
  * ,----------------------------------.           ,----------------------------------.
@@ -179,7 +172,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------|           |------+------+------+------+-------|
  * |  F11 |  F12 |Mute  |VolDwn|VolUP |           |MouseL|MouseD|MouseU|MouseR|MouseWU|
  * |------+------+------+------+------|           |------+------+------+------+-------|
- * |mbtn1 |mbtn2 |fancy |qwerty|dvorak|           |winLef|winMax|winRgt|scrsht|MouseWD|
+ * |mbtn1 |mbtn2 |fancy |qwerty|      |           |mPrev |mNext |mPlay |scrsht|MouseWD|
  * `----------------------------------'           `-----------------------------------'
  *                  ,--------------------.    ,------,-------------.
  *                  | GUI | Space |LOWER |    |RAISE | Enter| Tab  |
@@ -188,10 +181,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                                `------'    `------'
  */
 [_ADJUST] =  LAYOUT( \
-  KC_F1,   KC_F2,   KC_F3,    KC_F4,       KC_F5,        KC_F6,    KC_F7,   KC_F8,   KC_F9,    KC_F10,  \
+  KC_F1,   KC_F2,   KC_F3,    KC_F4,           KC_F5,    KC_F6,    KC_F7,   KC_F8,   KC_F9,    KC_F10,  \
   KC_F11,  KC_F12,  KC__MUTE, KC__VOLDOWN, KC__VOLUP,    KC_MS_L,  KC_MS_D, KC_MS_U, KC_MS_R,  KC_WH_U, \
-  KC_BTN1, KC_BTN2, TG(_FANCY),   QWERTY,  _______,      SPCT_LEFT_HALF, SPCT_MAXIMIZE , SPCT_RIGHT_HALF , SCREENSHOT ,  KC_WH_D, \
-                    _______,  _______,     _______,      _______,  _______, _______                     \
+  KC_BTN1, KC_BTN2, TG(_FANCY), QWERTY, _______,         KC_MPRV, KC_MNXT, KC_MPLY, SCREENSHOT ,  KC_WH_D, \
+                        _______, _______, _______,       _______,  _______, _______                     \
 )
 };
 
@@ -379,6 +372,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return false;
       break;
+    case VIM_TOGGLE_COMMENT:
+      if (record->event.pressed) {
+        SEND_STRING(SS_TAP(X_SPACE)"ci");
+      }
+      return false;
+      break;
     case VIM_OPEN_FOLDS:
       if (record->event.pressed) {
         SEND_STRING(SS_TAP(X_ESCAPE)"zR");
@@ -387,7 +386,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       break;
     case VIM_COPY_FILE_PATH:
       if (record->event.pressed) {
-        SEND_STRING(SS_TAP(X_ESCAPE)":let @+ = expand(\"%\")");
+        SEND_STRING(SS_TAP(X_ESCAPE)":let @+ = expand(\"%\")"SS_TAP(X_ENTER));
       }
       return false;
       break;
