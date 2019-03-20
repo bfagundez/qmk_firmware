@@ -83,7 +83,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /* Lower (Macro full)
  *
  * ,----------------------------------.           ,----------------------------------.
- * |winLef|      |winMax|      |winRgt|           |ViOpnf|ViPast|ViCPth|ViEqPn|ViTgCm|
+ * |   1  |   2  |   3  |   4  |   5  |           |   6  |   7  |   8  |   9  |   0  |
  * |------+------+------+------+------|           |------+------+------+------+------|
  * |ViPTab|viNtab|viHSpl|viVspl|ViSave|           |ViPanL|ViPanD|ViPanU|ViPanR|ViNTab|
  * |------+------+------+------+------|           |------+------+------+------+------|
@@ -96,7 +96,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                                `------'    `------'
  */
 [_LOWER] = LAYOUT( \
-  SPCT_LEFT_HALF, _______, SPCT_MAXIMIZE, _______,  SPCT_RIGHT_HALF,        VIM_OPEN_FOLDS,  VIM_PASTE_LAST_REGISTER , VIM_COPY_FILE_PATH, VIM_EQUALIZE_PANES, VIM_TOGGLE_COMMENT,    \
+  KC_1,    KC_2,    KC_3,     KC_4,      KC_5,       KC_6,    KC_7,    KC_8,    KC_9,    KC_0,\
   VIM_PREV_TAB,  VIM_NEW_TAB, VIM_H_SPLIT,  VIM_V_SPLIT,  VIM_SAVE,         VIM_PANE_LEFT,  VIM_PANE_DOWN,  VIM_PANE_UP,  VIM_PANE_RIGHT,  VIM_NEXT_TAB, \
   TMUX_PREV_TAB, TMUX_ZOOM,   TMUX_H_SPLIT, TMUX_V_SPLIT, TMUX_EDIT_MODE,   TMUX_PANE_LEFT, TMUX_PANE_DOWN, TMUX_PANE_UP, TMUX_PANE_RIGHT, TMUX_NEXT_TAB, \
                                               _______, _______, _______,    _______,    _______,  _______ \
@@ -125,11 +125,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /* Extra
  *
  * ,----------------------------------.           ,----------------------------------.
- * |   1  |   2  |   3  |   4  |   5  |           |   6  |   7  |   8  |   9  |   0  |
+ * |winLef|      |winMax|      |winRgt|           |ViOpnf|ViPast|ViCPth|ViEqPn|ViTgCm|
  * |------+------+------+------+------|           |------+------+------+------+------|
  * |      |      |      |      |      |           |      |      |      |      |      |
  * |------+------+------+------+------|           |------+------+------+------+------|
- * |      |      |      |      |      |           |      |      |      |      |      |
+ * |      |      |  <   |  >   |      |           |      |      |      |      |      |
  * `----------------------------------'           `----------------------------------'
  *                  ,--------------------.    ,------,-------------.
  *                  | GUI | Space |LOWER |    |RAISE |Enter |EXTRA |
@@ -138,9 +138,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                                `------'    `------'
  */
 [_EXTRA] = LAYOUT( \
-  KC_1,    KC_2,    KC_3,     KC_4,      KC_5,       KC_6,    KC_7,    KC_8,    KC_9,    KC_0,\
-  _______, _______, _______, _______, _______,       _______, _______, _______, _______, _______, \
-  _______, _______, _______, _______, _______,       _______, _______, _______, _______, _______, \
+  SPCT_LEFT_HALF, _______, SPCT_MAXIMIZE, _______,  SPCT_RIGHT_HALF,        VIM_OPEN_FOLDS,  VIM_PASTE_LAST_REGISTER , VIM_COPY_FILE_PATH, VIM_EQUALIZE_PANES, VIM_TOGGLE_COMMENT,    \
+  _______, _______, _______, _______, _______,       KC_MPRV, KC_MNXT, KC_MPLY, _______, _______, \
+  _______, _______, KC_LT, KC_GT, _______,       _______, _______, _______, _______, _______, \
                     _______, _______, _______,       _______, _______, _______\
 ),
 /* Fancy (RGB-Numpad)
@@ -250,13 +250,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       break;
     case TMUX_V_SPLIT:
       if (record->event.pressed) {
-        SEND_STRING("`v");
+        SEND_STRING("`b");
       }
       return false;
       break;
     case TMUX_H_SPLIT:
       if (record->event.pressed) {
-        SEND_STRING("`b");
+        SEND_STRING("`v");
       }
       return false;
       break;
