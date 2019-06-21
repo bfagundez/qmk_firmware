@@ -34,6 +34,7 @@ enum custom_keycodes {
   VIM_H_SPLIT,
   VIM_OPEN_FOLDS,
   VIM_COPY_FILE_PATH,
+  VIM_TAB_CLOSE,
   VIM_SAVE,
   VIM_TOGGLE_COMMENT,
   TMUX_NEXT_TAB,
@@ -129,7 +130,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------|           |------+------+------+------+------|
  * |      |      |      |      |      |           |      |      |      |      |      |
  * |------+------+------+------+------|           |------+------+------+------+------|
- * |      |      |  <   |  >   |      |           |      |      |      |      |      |
+ * |      |      |  <   |  >   |      |           |      |      |      |      |ViTabC|
  * `----------------------------------'           `----------------------------------'
  *                  ,--------------------.    ,------,-------------.
  *                  | GUI | Space |LOWER |    |RAISE |Enter |EXTRA |
@@ -138,9 +139,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                                `------'    `------'
  */
 [_EXTRA] = LAYOUT( \
-  SPCT_LEFT_HALF, _______, SPCT_MAXIMIZE, _______,  SPCT_RIGHT_HALF,        VIM_OPEN_FOLDS,  VIM_PASTE_LAST_REGISTER , VIM_COPY_FILE_PATH, VIM_EQUALIZE_PANES, VIM_TOGGLE_COMMENT,    \
+  SPCT_LEFT_HALF, _______, SPCT_MAXIMIZE, _______,  SPCT_RIGHT_HALF, VIM_OPEN_FOLDS, VIM_PASTE_LAST_REGISTER, VIM_COPY_FILE_PATH, VIM_EQUALIZE_PANES, VIM_TOGGLE_COMMENT,    \
   _______, _______, _______, _______, _______,       KC_MPRV, KC_MNXT, KC_MPLY, _______, _______, \
-  _______, _______, KC_LT, KC_GT, _______,       _______, _______, _______, _______, _______, \
+  _______, _______, KC_LT, KC_GT, _______,       _______, _______, _______, _______, VIM_TAB_CLOSE, \
                     _______, _______, _______,       _______, _______, _______\
 ),
 /* Fancy (RGB-Numpad)
@@ -366,6 +367,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case VIM_EQUALIZE_PANES:
       if (record->event.pressed) {
         SEND_STRING(SS_LCTRL("w")SS_TAP(X_EQUAL));
+      }
+      return false;
+      break;
+    case VIM_TAB_CLOSE:
+      if (record->event.pressed) {
+        SEND_STRING(SS_TAP(X_ESCAPE)":tabclose"SS_TAP(X_ENTER));
       }
       return false;
       break;
