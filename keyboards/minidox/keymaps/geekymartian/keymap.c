@@ -37,6 +37,8 @@ enum custom_keycodes {
   VIM_TAB_CLOSE,
   VIM_SAVE,
   VIM_TOGGLE_COMMENT,
+  VIM_UNWRAP_WORD,
+  VIM_WRAP_WORD,
   TMUX_NEXT_TAB,
   TMUX_PREV_TAB,
   TMUX_PANE_DOWN,
@@ -128,7 +130,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,----------------------------------.           ,----------------------------------.
  * |winLef|      |winMax|      |winRgt|           |ViOpnf|ViPast|ViCPth|ViEqPn|ViTgCm|
  * |------+------+------+------+------|           |------+------+------+------+------|
- * |      |      |      |      |      |           |      |      |      |      |      |
+ * |      |      |      |      |      |           |      |      |      |Viwrp |ViUnwp|
  * |------+------+------+------+------|           |------+------+------+------+------|
  * |      |      |  <   |  >   |      |           |      |      |      |      |ViTabC|
  * `----------------------------------'           `----------------------------------'
@@ -140,7 +142,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 [_EXTRA] = LAYOUT( \
   SPCT_LEFT_HALF, _______, SPCT_MAXIMIZE, _______,  SPCT_RIGHT_HALF, VIM_OPEN_FOLDS, VIM_PASTE_LAST_REGISTER, VIM_COPY_FILE_PATH, VIM_EQUALIZE_PANES, VIM_TOGGLE_COMMENT,    \
-  _______, _______, _______, _______, _______,       KC_MPRV, KC_MNXT, KC_MPLY, _______, _______, \
+  _______, _______, _______, _______, _______,       KC_MPRV, KC_MNXT, KC_MPLY, VIM_WRAP_WORD, VIM_UNWRAP_WORD, \
   _______, _______, KC_LT, KC_GT, _______,       _______, _______, _______, _______, VIM_TAB_CLOSE, \
                     _______, _______, _______,       _______, _______, _______\
 ),
@@ -379,6 +381,18 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case VIM_TOGGLE_COMMENT:
       if (record->event.pressed) {
         SEND_STRING(SS_TAP(X_SPACE)"ci");
+      }
+      return false;
+      break;
+    case VIM_UNWRAP_WORD:
+      if (record->event.pressed) {
+        SEND_STRING("ysiy");
+      }
+      return false;
+      break;
+    case VIM_WRAP_WORD:
+      if (record->event.pressed) {
+        SEND_STRING("ysiw");
       }
       return false;
       break;
