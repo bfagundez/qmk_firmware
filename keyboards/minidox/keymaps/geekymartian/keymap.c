@@ -130,9 +130,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,----------------------------------.           ,----------------------------------.
  * |winLef|      |winMax|      |winRgt|           |ViOpnf|ViPast|ViCPth|ViEqPn|ViTgCm|
  * |------+------+------+------+------|           |------+------+------+------+------|
- * |      |      |      |      |      |           |      |      |      |Viwrp |ViUnwp|
+ * |mouWhU|      |      |      |      |           |      |      |      |Viwrp |ViUnwp|
  * |------+------+------+------+------|           |------+------+------+------+------|
- * |      |      |      |      |      |           |      |      |      |      |ViTabC|
+ * |mouWhD|      |      |      |      |           |mbtn1 |mbtn2 |      |      |ViTabC|
  * `----------------------------------'           `----------------------------------'
  *                  ,--------------------.    ,------,-------------.
  *                  | GUI | Space |LOWER |    |RAISE |Enter |EXTRA |
@@ -142,8 +142,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 [_EXTRA] = LAYOUT( \
   SPCT_LEFT_HALF, _______, SPCT_MAXIMIZE, _______,  SPCT_RIGHT_HALF, VIM_OPEN_FOLDS, VIM_PASTE_LAST_REGISTER, VIM_COPY_FILE_PATH, VIM_EQUALIZE_PANES, VIM_TOGGLE_COMMENT,    \
-  _______, _______, _______, _______, _______,       KC_MPRV, KC_MNXT, KC_MPLY, VIM_WRAP_WORD, VIM_UNWRAP_WORD, \
-  _______, _______, _______, _______, _______,       _______, _______, _______, _______, VIM_TAB_CLOSE, \
+  KC_WH_U, _______, _______, _______, _______,       _______, _______, _______, VIM_WRAP_WORD, VIM_UNWRAP_WORD, \
+  KC_WH_D, _______, _______, _______, _______,       KC_BTN1, KC_BTN2, _______, _______, VIM_TAB_CLOSE, \
                     _______, _______, _______,       _______, _______, _______\
 ),
 /* Fancy (RGB-Numpad)
