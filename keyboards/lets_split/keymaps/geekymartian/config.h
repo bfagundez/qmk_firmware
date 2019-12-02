@@ -1,0 +1,12 @@
+#define USE_SERIAL
+#define MASTER_RIGHT
+#define PREVENT_STUCK_MODIFIERS
+#define MOUSEKEY_DELAY             100
+#define MOUSEKEY_INTERVAL          30
+#define MOUSEKEY_MAX_SPEED         10
+#define MOUSEKEY_TIME_TO_MAX       10
+#define RGBLIGHT_ANIMATIONS
+#undef RGB_DI_PIN
+#define RGB_DI_PIN D3
+#undef RGBLED_NUM
+#define RGBLED_NUM 12

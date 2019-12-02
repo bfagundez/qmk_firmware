@@ -1,0 +1,13 @@
+#define PREVENT_STUCK_MODIFIERS
+#define MOUSEKEY_DELAY             100
+#define MOUSEKEY_INTERVAL          30
+#define MOUSEKEY_MAX_SPEED         10
+#define MOUSEKEY_TIME_TO_MAX       10
+#define RGBLIGHT_ANIMATIONS
+#undef RGBLED_NUM
+#define RGB_DI_PIN D7
+#define RGBLED_NUM 6
+#define NO_ACTION_ONESHOT
+#define NO_ACTION_MACRO
+#define NO_ACTION_FUNCTION
+#define MASTER_RIGHT

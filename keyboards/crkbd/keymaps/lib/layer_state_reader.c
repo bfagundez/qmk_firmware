@@ -1,9 +1,10 @@
 #include "crkbd.h"
 
 #define L_BASE 0
-#define L_LOWER 8
-#define L_RAISE 16
-#define L_ADJUST 65536
+#define L_LOWER 2
+#define L_RAISE 3
+#define L_EXTRA 4
+#define L_ADJUST 16
 #define L_ADJUST_TRI 65560
 
 char layer_state_str[40];
@@ -24,6 +25,9 @@ char *read_layer_state(void)
     case L_ADJUST:
     case L_ADJUST_TRI:
        snprintf(layer_state_str, sizeof(layer_state_str), "Layer: Adjust");
+       break;
+    case L_EXTRA:
+       snprintf(layer_state_str, sizeof(layer_state_str), "Layer: EXTRA!!!");
        break;
     default:
        snprintf(layer_state_str,sizeof(layer_state_str), "Layer: Undef-%ld", layer_state);
