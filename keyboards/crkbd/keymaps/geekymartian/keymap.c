@@ -87,15 +87,16 @@ enum custom_keycodes {
 #define KC_RST   RESET
 #define KC_MO   MO
 #define KC_SFT_T   SFT_T
+#define KC_CTL_T   CTL_T
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_QWERTY] = LAYOUT_kc( \
   //,-----------------------------------------.                ,-----------------------------------------.
       TAB,      Q,     W,     E,     R,     T,                      Y,     U,     I,     O,     P,  BSPC,\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
-      ESC,     A,     S,     D,     F,     G,                      H,     J,     K,     L,  SFT_T(KC_SCLN),  SFT_T(KC_QUOTE),\
+      SFT_T(KC_ESC),  SFT_T(KC_A), S, D,F,  G,                      H,     J,     K,     L,  SFT_T(KC_SCLN),  SFT_T(KC_QUOTE),\
   //|------+------+------+------+------+------|                |------+------+------+------+------+------|
-      LCTL,     Z,     X,     C,     V,     B,                      N,     M,  COMM,   DOT,  SLSH,  RSFT,\
+      LCTL,     CTL_T(KC_Z),     X,     C,     V,     B,                      N,     M,  COMM,   DOT,  SLSH,  RSFT,\
   //|------+------+------+------+------+------+------|  |------+------+------+------+------+------+------|
                                   RGUI, SPC, LOWER,      RAISE, ENT,  MO(_EXTRA) \
                               //`--------------------'  `--------------------'
